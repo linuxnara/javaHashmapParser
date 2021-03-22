@@ -11,6 +11,11 @@ namespace javaHashmapParser
 {
     public partial class Form1 : Form
     {
+        private String m1_str = String.Empty;
+        private String m2_str = String.Empty;
+        private String m3_str = String.Empty;
+        private String m4_str = String.Empty;
+
         public Form1()
         {
             InitializeComponent();
@@ -177,6 +182,137 @@ namespace javaHashmapParser
                 row.Cells["ENC"].Value = "ENC";
                 row.Cells["DES"].Value = "DES";
             }
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            copyDataGridViewToText("clipboard");
+        }
+
+        private void copyDataGridViewToText(String target)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                String copyText = "";
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    copyText += row.Cells["KEY"].Value + "=";
+                    if (row.Cells["VALUE"].Value.ToString() == "")
+                    {
+                        copyText += ",\r\n";
+                    }
+                    else
+                    {
+                        copyText += row.Cells["VALUE"].Value + ",\r\n";
+                    }
+
+                }
+
+                switch (target)
+                {
+                    case "clipboard":
+                        Clipboard.SetText(copyText);
+                        break;
+                    case "m1":
+                        m1_str = copyText;
+                        break;
+                    case "m2":
+                        m2_str = copyText;
+                        break;
+                    case "m3":
+                        m3_str = copyText;
+                        break;
+                    case "m4":
+                        m4_str = copyText;
+                        break;
+                    default:
+                        Clipboard.SetText(copyText);
+                        break;
+                }
+                
+            }
+        }
+
+
+        private void btnM1_Click(object sender, EventArgs e)
+        {            
+            if (m1_str == "")
+            {
+                copyDataGridViewToText("m1");                
+            } else
+            {
+                textBox1.Text = m1_str.Replace("\r\n", "");
+                button1_Click(sender, e);
+            }
+        }
+
+        private void btnM2_Click(object sender, EventArgs e)
+        {
+            if (m2_str == "")
+            {
+                copyDataGridViewToText("m2");
+
+            } else
+            {
+                textBox1.Text = m2_str.Replace("\r\n", "");
+                button1_Click(sender, e);
+            }
+        }
+
+        private void btnM3_Click(object sender, EventArgs e)
+        {            
+            if (m3_str == "")
+            {
+                copyDataGridViewToText("m3");
+                
+            } else
+            {
+                textBox1.Text = m3_str.Replace("\r\n", "");
+                button1_Click(sender, e);
+            }
+        }
+
+        private void btnM4_Click(object sender, EventArgs e)
+        {            
+            if (m4_str == "")
+            {
+                copyDataGridViewToText("m4");
+                
+            } else
+            {
+                textBox1.Text = m4_str.Replace("\r\n", "");
+                button1_Click(sender, e);
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if (cbCacheName.SelectedIndex == -1) return;
+
+            switch (cbCacheName.SelectedIndex)
+            {
+                case 0:
+                    m1_str = string.Empty;
+                    m2_str = string.Empty;
+                    m3_str = string.Empty;
+                    m4_str = string.Empty;
+                    break;
+                case 1:
+                    m1_str = string.Empty;
+                    break;
+                case 2:
+                    m2_str = string.Empty;
+                    break;
+                case 3:
+                    m3_str = string.Empty;
+                    break;
+                case 4:
+                    m4_str = string.Empty;
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
